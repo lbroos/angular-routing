@@ -1,0 +1,44 @@
+<mat-card *ngIf="book$ | async as book">
+    <mat-card-header>
+        <mat-card-title>{{book.title}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+            <div class="row">
+                <div class="mat-subheading-2 col-md-2">Author(s)</div>
+                <div class="col-md-10">
+                    <span *ngFor="let author of book.authors; let isLast=last">
+                        {{author}}{{isLast ? '' :', '}}&nbsp;
+                    </span>
+                </div> 
+            </div>
+            <div class="row">
+                <div class="mat-subheading-2 col-md-2">Description</div>
+                <div class='col-md-10'>{{book.description}}</div>
+            </div>
+
+            <mat-divider class="my-3" [inset]="true"></mat-divider>
+
+            <div class="row">
+                <div class="mat-subheading-2 col-md-2">Publication details</div>
+                <div class="col-md-10">
+                    <div> Publish date: {{book.publishDate | date: "dd/MM/yyyy"}}</div>
+                    <div> Publisher: {{book.publisher}}</div>
+                </div>
+            </div>
+
+            <mat-divider class="my-3" [inset]="true"></mat-divider>
+
+            <div class="row">
+                <div class="mat-subheading-2 col-md-2">Reading details</div>
+                <div class="col-md-10">
+                    <div> Start Reading Date: {{book.startReadingDate | date: "dd/MM/yyyy"}}</div>
+                    <div> Read date: {{book.readDate | date: "dd/MM/yyyy" }}</div>
+                    <div> Rating: <app-star-rating [rating]="book.rating"></app-star-rating> </div>
+                </div>
+            </div>
+    </mat-card-content>
+    <mat-card-actions>
+        <button color="primary" mat-button >Edit</button>
+        <button color="accent" mat-button>Back to book list</button>
+    </mat-card-actions>
+</mat-card>

@@ -1,0 +1,6 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <h1 class="title">{{title | uppercase }}</h1>
+        <a *ngFor="let item of menuItems">{{item.title}}</a>
+    </mat-toolbar-row>
+</mat-toolbar>

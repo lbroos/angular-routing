@@ -1,0 +1,75 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>{{pageTitle}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form>
+            <div class="row">
+                <mat-form-field class="col">
+                    <mat-label>Title</mat-label>
+                    <input matInput type="text" required [(ngModel)]="book.title" name="title">
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field class="col-8">
+                    <mat-label>Add author</mat-label>
+                    <input matInput type="text" [required]="authorRequired" name="author" [(ngModel)]="author">
+                </mat-form-field>
+                <button mat-button class="col-2 bnt-small" color="primary" (click)="addAuthor()">Add author</button>
+                <mat-chip-list #chipList aria-label="Authors" class="col-12 mb-2">
+                    <mat-chip *ngFor="let author of book.authors" removable (removed)="removeAuthor(author)">
+                        {{author}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                </mat-chip-list>
+            </div>
+
+            <div class="row">
+                <mat-form-field class="col">
+                    <mat-label>Description</mat-label>
+                    <textarea matInput type="text" matTextareaAutosize required [(ngModel)]="book.description"
+                        name="description"></textarea>
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field class="col-4">
+                    <mat-label>Publish Date</mat-label>
+                    <input matInput [matDatepicker]="publishDate" required [(ngModel)]="book.publishDate" name="publishDate">
+                    <mat-datepicker-toggle matSuffix [for]="publishDate"></mat-datepicker-toggle>
+                    <mat-datepicker #publishDate></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="col-8">
+                    <mat-label>Publisher</mat-label>
+                    <input matInput type="text" required [(ngModel)]="book.publisher" name="publisher">
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field class="col-4">
+                    <mat-label>Start Reading Date</mat-label>
+                    <input matInput [matDatepicker]="startReadingDate" [(ngModel)]="book.startReadingDate" name="startReadingDate">
+                    <mat-datepicker-toggle matSuffix [for]="startReadingDate"></mat-datepicker-toggle>
+                    <mat-datepicker #startReadingDate></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="col-4">
+                    <mat-label>Read Date</mat-label>
+                    <input matInput [matDatepicker]="readDate" [(ngModel)]="book.readDate" name="readDate">
+                    <mat-datepicker-toggle matSuffix [for]="readDate"></mat-datepicker-toggle>
+                    <mat-datepicker #readDate></mat-datepicker>
+                </mat-form-field>
+                <div class="col-4">
+                    <mat-label>Rating   </mat-label>
+                    <app-star-rating [rating]="book.rating" (ratingUpdated)="onRatingChanged($event)"></app-star-rating>
+                </div>
+            </div>
+
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button color="primary" mat-raised-button>Save</button>
+        <button color="warn" mat-button>Delete</button>
+        <button color="accent" mat-button>Cancel</button>
+    </mat-card-actions>
+</mat-card>
