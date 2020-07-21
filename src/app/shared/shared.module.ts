@@ -25,7 +25,6 @@ import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     StarRatingComponent,
-    NavbarComponent
   ],
   imports: [
     CommonModule,
@@ -65,7 +64,6 @@ import { FormsModule } from '@angular/forms';
     MatMenuModule,
     MatDividerModule,
     StarRatingComponent,
-    NavbarComponent,
   ]
 })
 export class SharedModule { }

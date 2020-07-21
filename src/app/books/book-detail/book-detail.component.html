@@ -38,7 +38,7 @@
             </div>
     </mat-card-content>
     <mat-card-actions>
-        <button color="primary" mat-button >Edit</button>
-        <button color="accent" mat-button>Back to book list</button>
+        <button color="primary" mat-button [routerLink]="['/books', book.id, 'edit']" >Edit</button>
+        <button color="accent" mat-button [routerLink]="['/books']">Back to book list</button>
     </mat-card-actions>
 </mat-card>

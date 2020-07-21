@@ -14,11 +14,16 @@ import { BookEditComponent } from './books/book-edit/book-edit.component';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 
+import { AppRoutingModule } from './app-routing.module';
+import { FormsModule } from '@angular/forms';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     PageNotFoundComponent,
+    NavbarComponent,
     BooksComponent,
     BookDetailComponent,
     BookEditComponent
@@ -26,8 +31,10 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     SharedModule,
     HttpClientModule,
+    AppRoutingModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemBooksService, { delay: 1000 })
   ],
   providers: [],

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Book } from 'src/app/shared/models/book.model';
 import { BookService } from '../services/book.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-book-detail',
@@ -12,9 +13,26 @@ export class BookDetailComponent implements OnInit {
   public book$: Observable<Book>;
 
   constructor(
+    private route: ActivatedRoute,
     private bookService: BookService) { }
 
   ngOnInit(): void {
-    this.book$ = this.bookService.getBook(1);
+    const id = this.route.snapshot.paramMap.get('id');
+    if (isNaN(+id) && id === "new") {
+      const book: Book = {
+        id: 0,
+        title: '',
+        authors: [],
+        description: '',
+        publishDate: new Date(),
+        publisher: '',
+        startReadingDate: null,
+        readDate: null,
+        rating: 0
+      };
+      this.book$ = of(book);
+    } else {
+      this.book$ = this.bookService.getBook(+id);
+    }
   }
 }

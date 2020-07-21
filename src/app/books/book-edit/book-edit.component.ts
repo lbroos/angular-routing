@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Book } from 'src/app/shared/models/book.model';
 import { BookService } from '../services/book.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-edit',
@@ -16,14 +17,36 @@ export class BookEditComponent implements OnInit {
   public errorMessage: string = '';
 
   constructor(
+    private route: ActivatedRoute,
+    private router: Router,
     private bookService: BookService) { }
 
   public ngOnInit(): void {
-    this.bookService.getBook(1)
-    .subscribe(book => {
-      this.book = book;
-      this.book.authors.length !== 0 ? this.authorRequired = false : this.authorRequired = true;
-    });
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      if (isNaN(+id) && id === "new") {
+        this.book = {
+          id: 0,
+          title: '',
+          authors: [],
+          description: '',
+          publishDate: new Date(),
+          publisher: '',
+          startReadingDate: null,
+          readDate: null,
+          rating: 0
+        };
+        this.authorRequired = true;
+        this.pageTitle = "Add book";
+      } else {
+        this.bookService.getBook(+id)
+          .subscribe(book => {
+            this.book = book;
+            this.book.authors.length !== 0 ? this.authorRequired = false : this.authorRequired = true;
+            this.pageTitle = "Edit book";
+          });
+      }
+    })
   }
 
   public addAuthor(): void {
@@ -45,5 +68,29 @@ export class BookEditComponent implements OnInit {
 
   public onRatingChanged($event: number): void {
     this.book.rating = $event;
+  }
+
+  public saveBook(): void {
+    if (this.book.id === 0) {
+      this.bookService.createBook(this.book)
+        .subscribe({
+          next: () => this.router.navigate(['/books']),
+          error: err => this.errorMessage = err
+        });
+    } else {
+      this.bookService.updateBook(this.book)
+        .subscribe({
+          next: () => this.router.navigate(['/books']),
+          error: err => this.errorMessage = err
+        });
+    }
+  }
+  
+  public deleteBook(): void {
+    this.bookService.deleteBook(this.book.id)
+      .subscribe({
+        next: () => this.router.navigate(['/books']),
+        error: err => this.errorMessage = err
+      });
   }
 }
