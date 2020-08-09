@@ -1,27 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { BooksComponent } from './books/books.component';
-import { BookDetailComponent } from './books/book-detail/book-detail.component';
-import { BookEditComponent } from './books/book-edit/book-edit.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { CustomPreloadingStrategy } from './shared/preloading-strategy/custom-preloading-strategy';
 
 const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent
   },
-  {
-    path: 'books',
-    component: BooksComponent
-  },
-  {
-    path: 'books/:id',
-    component: BookDetailComponent
-  },
-  {
-    path: 'books/:id/edit',
-    component: BookEditComponent
+  { 
+    path: 'books', 
+    loadChildren: () => import('./books/books.module').then(m => m.BooksModule),
+    data: { preload: true }
   },
   {
     path: '',
@@ -35,7 +26,10 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes, {
+    preloadingStrategy: CustomPreloadingStrategy
+  })],
+  exports: [RouterModule],
+  providers: [ CustomPreloadingStrategy ]
 })
 export class AppRoutingModule { }

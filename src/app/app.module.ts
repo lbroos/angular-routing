@@ -8,9 +8,6 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemBooksService } from './shared/book-data/books';
-import { BooksComponent } from './books/books.component';
-import { BookDetailComponent } from './books/book-detail/book-detail.component';
-import { BookEditComponent } from './books/book-edit/book-edit.component';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -24,9 +21,6 @@ import { NavbarComponent } from './shared/components/navbar/navbar.component';
     HomeComponent,
     PageNotFoundComponent,
     NavbarComponent,
-    BooksComponent,
-    BookDetailComponent,
-    BookEditComponent
   ],
   imports: [
     BrowserModule,
